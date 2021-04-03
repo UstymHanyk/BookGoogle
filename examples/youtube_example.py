@@ -10,7 +10,7 @@ import json
 import requests
 from pprint import pprint
 
-API_KEY = "AIzaSyDgLXdyRnJwVLBX6xtsDgkrXrYuJnGRhLM"
+API_KEY = "YOUR_KEY"
 SEARCH_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/search"
 VIDEO_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/videos"
 
