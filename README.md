@@ -2,14 +2,12 @@
 
 ## Description: 
 
-## Table of Contents: 
+## :bookmark_tabs: Table of Contents: 
 
-## Installation: 
+## 💻 Usage: 
 
-## Usage: 
+## :memo: Contributing: 
 
-## Contributing: 
+## :busts_in_silhouette: Credits: 
 
-## Credits: 
-
-## License:  
+## :closed_lock_with_key: License:  
