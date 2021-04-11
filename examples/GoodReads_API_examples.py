@@ -1,6 +1,6 @@
 from goodreads import client
 
-client = client.GoodreadsClient('BdsXBvnvsl28OVnjElMyA', '')
+client = client.GoodreadsClient('YOUR_KEY', '')
 #__________WORK WITH BOOKS____________
 
 # Access the first book added to Goodread. It is the book with id 1.
