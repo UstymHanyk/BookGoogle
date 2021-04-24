@@ -1,0 +1,19 @@
+<mxfile>
+    <diagram id="RKSmh78s-3pH5PF0v3-3" name="Page-1">
+        <mxGraphModel dx="846" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="list" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontColor=#000000;labelBackgroundColor=none;strokeColor=#000000;fillColor=#B3B3B3;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="130" width="220" height="514" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#000000;" parent="2" vertex="1">
+                    <mxGeometry y="26" width="220" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="+  __add__(list): list&#10;+ __contains__(object): bool&#10;+ __delitem__(int): None&#10;+ __eq__(object): bool&#10;+ __ge__(list): bool&#10;+ __getattribute__(str): object&#10;+ __getitem__(int): object  &#10;+ __gt__(list): bool&#10;+ __iadd__(list): list&#10;+  __imul__(int): list&#10;+  __init__(self, /, *args, **kwargs)  &#10;+  __iter__(): list_iterator&#10;+ __le__(list): bool&#10;+ __len__(): int&#10;+ __lt__(list): bool&#10;+ __mul__(int): list&#10;+ __ne__(object): bool&#10;+ __repr__(): str&#10;+ __reversed__(): list_reverseiterator&#10;+ __rmul__(int): list&#10;+ __setitem__(int, object): None&#10;+ __sizeof__(): int&#10;+ append(object): None&#10;+ clear(): None&#10;+ copy(): list&#10;+ count(object): int&#10;+ extend(list): None&#10;+ index(object): int&#10;+ insert(int, object): None&#10;+ pop(int): object&#10;+ remove(object): None&#10;+ reverse(): None&#10;+ sort(): None" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#000000;" parent="2" vertex="1">
+                    <mxGeometry y="34" width="220" height="480" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
