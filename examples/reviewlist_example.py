@@ -14,11 +14,16 @@ def add_page_to_reviews(isbn: Union[str, int], reviews, page: Union[str, int]):
     soup = BeautifulSoup(requests.get(url=REVIEWS_URL).text, 'html.parser')
 
     for review_div in soup.find_all('div', {"class":"gr_review_container"}):
-        print(review_div.find_all("span", {"class":"gr_review_text"}))
-        name = review_div.find_all("span", {"class":"gr_review_by"})[0].text
-        rating = review_div.find_all("span", {"class":"gr_rating"})[0].text.count("★")
-        text = review_div.find_all("div", {"class":"gr_review_text"})[0].text
-        reviews.add_review(Review(name, rating, text))
+        # print(review_div.find_all("span", {"class":"gr_review_text"}))
+        name = review_div.find("span", {"class":"gr_review_by"}).a.text
+        try:
+            rating = review_div.find("span", {"class":"gr_rating"}).text.count("★")
+        except AttributeError:
+            continue
+        text = review_div.find("div", {"class":"gr_review_text"}).text.strip()
+        if text.endswith("...more"):
+            text = text[:-7].strip()
+        reviews.add_review(Review((name, rating, text)))
 
 
 if __name__ == "__main__":
