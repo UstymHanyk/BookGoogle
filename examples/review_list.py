@@ -4,12 +4,14 @@ about book review, written in english, and class 'ReviewList',
 which keeps all book reviews.
 """
 
+import re
 from nltk.sentiment import SentimentIntensityAnalyzer
-import time
 from typing import List
+from langdetect import detect
+
 
 class Review:
-    """Review information"""
+    """Information about the review."""
     def __init__(self, info_tuple: tuple):
         """Initializes the class."""
         self.author = info_tuple[0]
@@ -19,12 +21,19 @@ class Review:
         self.neutrality = self.calc_neutrality()
 
     def calc_neutrality(self) -> float:
-        """Calculates the text neutrality."""
+        """Calculates neutral lexic's percentage
+        in the text."""
         sia_object = SentimentIntensityAnalyzer()
         return sia_object.polarity_scores(self.text)['neu']
 
     def __lt__(self, other) -> bool:
-        """Compares reviews reliability."""
+        """Compares reviews' ratings and reliability
+        by three aspects.
+        1 - rating
+        2 - amount of neutral language
+        3 - length of the text
+        Method is needed for future comparing of reviews
+        and sorting."""
         if self.rating == other.rating:
             if self.neutrality == other.neutrality:
                 if self.length < other.length:
@@ -35,10 +44,8 @@ class Review:
         return self.rating < other.rating
 
     def __repr__(self) -> str:
-        """
-        Returns the string to represent the
-        class.
-        """
+        """Returns the string to represent the
+        class."""
         return f"username: {self.author}\nrating: \
 {self.rating*'⋆'}\n{self.text}\ntotal length: {self.length}\n\
 neutrality of text: {self.neutrality}\n"
@@ -46,43 +53,63 @@ neutrality of text: {self.neutrality}\n"
 class ReviewList:
     """Keeps and sort Review objects."""
     def __init__(self):
-        """Initialize the class."""
+        """Initializes the class."""
         self.reviews = []
 
     def __repr__(self) -> str:
-        """
-        Returns the string to represent the
-        class.
-        """
+        """Returns the string to represent the
+        class."""
         final_str = ''
         for review in self.reviews:
             final_str += str(review)
         return final_str
 
     def add_review(self, review: Review):
-        """Adds a new review."""
-        self.reviews.append(review)
+        """Adds a new review if it's written in English."""
+        if detect(review.text.split('.')[0]) == 'en':
+            self.reviews.append(review)
 
     def reliability_sort(self):
-        """
-        Sorts reviews by their rates, length and
-        number of neutral lexicon.
-        """
+        """Sorts reviews by their rates, length and
+        number of neutral language in descending order.
+        Here the adapted method __lt__ for class
+        Reviews is used."""
         self.reviews.sort(reverse=True)
 
-    def get_mood_range(self) -> List[Review]:
+    def get_mood_range(self, mood_lst=[5, 3, 2]) -> List[Review]:
         """
         Returns the list of three most reliable
         reviews from the all given.
+
+        Gets the sorted list of reviews and returns
+        list with first positive, nutral and negative reviews
+        (rating 5, 3 and 2 in accordance). There would be our
+        most reliable reviews from every category.
+
+        If there are no reviews with ratings5 or 2, the method
+        will return reviews with ratings 4 or 1.
         """
         result = []
-        mood_set = [5, 3, 2]
         index = 0
-        while index < 3:
+
+        while index < len(mood_lst):
             for review in self.reviews:
-                if index < 3:
-                    if review.rating == mood_set[index]:
+                if index < len(mood_lst):
+                    if review.rating == mood_lst[index]:
                         result.append(review)
                         index += 1
             index += 1
+
+        if len(result) < 3 and len(mood_lst) > 2:
+            if any(review.rating == 2 for review in result) is False and \
+                any(review.rating == 5 for review in result) is False:
+                    # self.get_mood_range(mood_lst=[4, 1])
+                result += self.get_mood_range(mood_lst=[4, 1])
+                # result += self.get_mood_range(mood_lst=[4])
+            elif not any(review.rating == 5 for review in result):
+                result += self.get_mood_range(mood_lst=[4])
+            elif not any(review.rating == 2 for review in result):
+                result += self.get_mood_range(mood_lst=(1,))
+            result.sort(reverse=True)
+
         return result
