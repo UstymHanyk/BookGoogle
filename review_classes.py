@@ -12,6 +12,7 @@ from langdetect import detect
 
 class Review:
     """Information about the review."""
+
     def __init__(self, info_tuple: tuple):
         """Initializes the class."""
         self.author = info_tuple[0]
@@ -47,11 +48,13 @@ class Review:
         """Returns the string to represent the
         class."""
         return f"username: {self.author}\nrating: \
-{self.rating*'⋆'}\n{self.text}\ntotal length: {self.length}\n\
+{self.rating * '⋆'}\n{self.text}\ntotal length: {self.length}\n\
 neutrality of text: {self.neutrality}\n"
+
 
 class ReviewList:
     """Keeps and sort Review objects."""
+
     def __init__(self):
         """Initializes the class."""
         self.reviews = []
@@ -63,6 +66,15 @@ class ReviewList:
         for review in self.reviews:
             final_str += str(review)
         return final_str
+
+    def clear(self):
+        """
+        Clears itself and returns all of the data
+        """
+        deleted_data = ReviewList()
+        deleted_data.reviews = self.reviews
+        self.reviews = []
+        return deleted_data
 
     def add_review(self, review: Review):
         """Adds a new review if it's written in English."""
@@ -80,10 +92,12 @@ class ReviewList:
         """
         Returns the list of three most reliable
         reviews from the all given.
+
         Gets the sorted list of reviews and returns
         list with first positive, nutral and negative reviews
         (rating 5, 3 and 2 in accordance). There would be our
         most reliable reviews from every category.
+
         If there are no reviews with ratings5 or 2, the method
         will return reviews with ratings 4 or 1.
         """
@@ -100,8 +114,8 @@ class ReviewList:
 
         if len(result) < 3 and len(mood_lst) > 2:
             if any(review.rating == 2 for review in result) is False and \
-                any(review.rating == 5 for review in result) is False:
-                    # self.get_mood_range(mood_lst=[4, 1])
+                    any(review.rating == 5 for review in result) is False:
+                # self.get_mood_range(mood_lst=[4, 1])
                 result += self.get_mood_range(mood_lst=[4, 1])
                 # result += self.get_mood_range(mood_lst=[4])
             elif not any(review.rating == 5 for review in result):
@@ -109,5 +123,4 @@ class ReviewList:
             elif not any(review.rating == 2 for review in result):
                 result += self.get_mood_range(mood_lst=(1,))
             result.sort(reverse=True)
-
         return result

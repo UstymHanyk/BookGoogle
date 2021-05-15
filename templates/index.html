@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<style>
+	body{
+		background: #bcbaf4;  /* fallback for old browsers */
+
+	}
+</style>
+<div class="main_container container" style="text-align: center">
+ 		<span class="title_text underline--magical">Book Google</span>
+      		<form action="/book_info" method="post">
+				<input name="book_title" placeholder="Enter book's title" type="text"/>
+				<input type="submit" value="Get info"/>
+			</form>
+    </div>
+{% endblock %}
+ 
