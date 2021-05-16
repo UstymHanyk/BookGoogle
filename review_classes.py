@@ -7,6 +7,7 @@ which keeps all book reviews.
 from nltk.sentiment import SentimentIntensityAnalyzer
 from typing import List
 from langdetect import detect
+from langdetect.lang_detect_exception import LangDetectException
 
 
 class Review:
@@ -77,9 +78,11 @@ class ReviewList:
 
     def add_review(self, review: Review):
         """Adds a new review if it's written in English."""
-        if not review.text.split('.')[0].isdigit():
+        try:
             if detect(review.text.split('.')[0]) == 'en':
                 self.reviews.append(review)
+        except LangDetectException:
+            print(f"Language of ({review.text.split('.')[0]}) could not be detect")
 
     def reliability_sort(self):
         """Sorts reviews by their rates, length and
