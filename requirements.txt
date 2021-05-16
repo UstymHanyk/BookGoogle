@@ -3,3 +3,5 @@ flask
 nltk
 bs4
 langdetect
+gunicorn
+requests
