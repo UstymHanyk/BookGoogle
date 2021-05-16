@@ -20,7 +20,14 @@ The usefulness is determined by the analysis of the reviews and calculating the 
     <li>
       <a href="#bookmark_tabs-table-of-contents">Table of Contents</a>
     </li>
-    <li><a href="#wrench-implementation">Implementation</a></li>
+    <li>
+      <a href="#wrench-implementation">Implementation</a>
+      <ul>
+        <li><a href="#used-technologies">Used technologies</a></li>
+        <li><a href="#algorithm">Algorithm</a></li>
+        <li><a href="#project-structure">Project structure</a></li>
+      </ul>
+    </li>
     <li><a href="#-usage">Usage</a></li>
     <li><a href="#memo-contributing">Contributing</a></li>
     <li><a href="#busts_in_silhouette-credits">Credits</a></li>
@@ -29,7 +36,7 @@ The usefulness is determined by the analysis of the reviews and calculating the 
 </details>
 
 ## :wrench: Implementation
-
+### Used technologies
 The following technologies were used to develop the system:
 1) Python 3.9
 2) HTML, CSS
@@ -43,7 +50,9 @@ The backend also makes use of the following non-standard Python libraries:
 2) **langdetect** - language-detection library.
 3) **flask** - micro web framework.
 4) **requests** - convenient library for sending HTTP requests.
+5) **dask** - library for parallel computing.
 
+### Algorithm
 The approximate description of the client-server communication is as follows:
 1) The server receives the title of the book from the client.
 2) The server gets information about the book with the most similar title using **GoodReads API**.
@@ -54,16 +63,66 @@ The approximate description of the client-server communication is as follows:
 7) The server retrieves the link to the video review of the book using **YouTube Data API v3**.
 8) The server sends the response to the client's request. The response contains the information about the book, most useful reviews and the link to the video book review on YouTube.
 
+### Project structure
+The following is a tree representing the project structure with all important files:
+```
+└───root directory
+    ├───app.py - main file of the web aplication linking all routes to python code
+    │   ├───index() function - provides "/" endpoint for main page
+    │   └───show_book_info_page() function - provides "/book_info" endpoint for receiving page with info about boook
+    ├───review_classes.py - provides the implementation of ReviewList ADT
+    │   ├───class Review
+    │   └───class ReviewList
+    ├───review_parser.py - provides functions for retrieving book reviews by scraping GoodReads, utilizes ReviewList ADT
+    │   ├───scrape_reviews() function - return reviews of the book given its ISBN
+    │   ... - some other helper methods
+    ├───goodreads_search.py - provides book search
+    │   ├───search_book() function - return info about books found by searching
+    │   ├───get_book_isbn() helper function - return ISBN of the book given its GoodReads id
+    │   └───element_to_dict() helper function - converts xml.etree.ElementTree.Element to the dictionary of dictionaries
+    ├───static
+    │   └───styles - a folder with css styles
+    │       ...
+    └───templates - HTML templates
+        ├───book.html
+        ├───index.html
+        └───layout.html
+```
+
+Class **ReviewList** is a container for instances of **Review** class.
+
+Class **Review** represents a review with associated text, rating, name of author and calculated level of neutrality. The instances of Review can be compared (<, => etc.) with each other. The following methods are implemented in Review:
+* \_\_init__(self, info_tuple) - creates instance of Review from passed in tuple containing the name of the author, the rating and the text of the review.
+* calc_neutrality(self) - calculate and return the level of neutrality of the review.
+* \_\_lt__(self, other) - compare two reviews. If the ratings are equal, the one with the greater level of neutrality is greater. We suppose that greater neutrality corresponds to the greater reliability.
+* \_\_repr__(self) - return text represetation of the review.
+
+Class **ReviewList** is an implemantation of the ReviewList ADT. It is designed to contain and sort by reliability the instances of Review.
+The class has the following methods:
+* \_\_init__(self) - create ReviewList
+* \_\_repr__(self) - return text representation of ReviewList
+* clear(self) - clears itself and returns all of the data
+* add_review(self, review) - add Review object to ReviewList
+* reliability_sort() - sort the interal list of reviews
+* get_mood_range(self, mood_lst) - return the most reliable (with the most emotionally neutral vocabulary) reviews that have ratings from mood_lst.
+
 ## 💻 Usage: 
 
 1) Visit <a href="">www.bookgoogle.com</a>
-<br />
-<div style="font-size:20px">or</div>
 
-1) Clone this repository with ```git clone https://github.com/UstymHanyk/BookGoogle.git```
-2) Install the needed dependecies with ```pip install -r requirements.txt```
-3) To run the server locally, type the following commands in your terminal:
-```bash
+**or**
+
+1) Clone this repository with
+```shell
+$ git clone https://github.com/UstymHanyk/BookGoogle.git
+```
+2) Install the needed dependecies with 
+```shell
+$ pip install -r requirements.txt
+```
+4) Replace the missing API keys in project files with your own GoodReads API key and Youtube API key.
+5) To run the server locally, type the following commands in your terminal:
+```shell
 $ export FLASK_APP=app.py
 $ python -m flask run
 ```
