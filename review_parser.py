@@ -11,7 +11,7 @@ def find_full_review_text(url):
     soup = BeautifulSoup(full_review_webpage.content, "lxml", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
     if not review_raw_text:
-        review_raw_text = "Error! Review text not found"
+        return "Error! Review text not found"
     return review_raw_text.text.strip()  # add review text to the reviews list
 
 reviews = ReviewList()
