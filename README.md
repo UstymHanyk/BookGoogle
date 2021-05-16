@@ -20,7 +20,14 @@ The usefulness is determined by the analysis of the reviews and calculating the 
     <li>
       <a href="#bookmark_tabs-table-of-contents">Table of Contents</a>
     </li>
-    <li><a href="#wrench-implementation">Implementation</a></li>
+    <li>
+      <a href="#wrench-implementation">Implementation</a>
+      <ul>
+        <li><a href="#used-technologies">Used technologies</a></li>
+        <li><a href="#algorithm">Algorithm</a></li>
+        <li><a href="#project-structure">Project structure</a></li>
+      </ul>
+    </li>
     <li><a href="#-usage">Usage</a></li>
     <li><a href="#memo-contributing">Contributing</a></li>
     <li><a href="#busts_in_silhouette-credits">Credits</a></li>
@@ -45,7 +52,7 @@ The backend also makes use of the following non-standard Python libraries:
 4) **requests** - convenient library for sending HTTP requests.
 5) **dask** - library for parallel computing.
 
-### Approximate algorithm
+### Algorithm
 The approximate description of the client-server communication is as follows:
 1) The server receives the title of the book from the client.
 2) The server gets information about the book with the most similar title using **GoodReads API**.
@@ -82,13 +89,30 @@ The following is a tree representing the project structure with all important fi
         └───layout.html
 ```
 
+Class **ReviewList** is a container for instances of **Review** class.
+
+Class **Review** represents a review with associated text, rating, name of author and calculated level of neutrality. The instances of Review can be compared (<, => etc.) with each other. The following methods are implemented in Review:
+* \_\_init__(self, info_tuple) - creates instance of Review from passed in tuple containing the name of the author, the rating and the text of the review.
+* calc_neutrality(self) - calculate and return the level of neutrality of the review.
+* \_\_lt__(self, other) - compare two reviews. If the ratings are equal, the one with the greater level of neutrality is greater. We suppose that greater neutrality corresponds to the greater reliability.
+* \_\_repr__(self) - return text represetation of the review.
+
+Class **ReviewList** is an implemantation of the ReviewList ADT. It is designed to contain and sort by reliability the instances of Review.
+The class has the following methods:
+* \_\_init__(self) - create ReviewList
+* \_\_repr__(self) - return text representation of ReviewList
+* clear(self) - clears itself and returns all of the data
+* add_review(self, review) - add Review object to ReviewList
+* reliability_sort() - sort the interal list of reviews
+* get_mood_range(self, mood_lst) - return the most reliable (with the most emotionally neutral vocabulary) reviews that have ratings from mood_lst.
+
 ## 💻 Usage: 
 
 1) Visit <a href="">www.bookgoogle.com</a>
 
 **or**
 
-1) Clone this repository with 
+1) Clone this repository with
 ```shell
 $ git clone https://github.com/UstymHanyk/BookGoogle.git
 ```
