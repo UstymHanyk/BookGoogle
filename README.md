@@ -29,7 +29,7 @@ The usefulness is determined by the analysis of the reviews and calculating the 
 </details>
 
 ## :wrench: Implementation
-
+### Used technologies
 The following technologies were used to develop the system:
 1) Python 3.9
 2) HTML, CSS
@@ -43,7 +43,9 @@ The backend also makes use of the following non-standard Python libraries:
 2) **langdetect** - language-detection library.
 3) **flask** - micro web framework.
 4) **requests** - convenient library for sending HTTP requests.
+5) **dask** - library for parallel computing.
 
+### Approximate algorithm
 The approximate description of the client-server communication is as follows:
 1) The server receives the title of the book from the client.
 2) The server gets information about the book with the most similar title using **GoodReads API**.
@@ -54,16 +56,49 @@ The approximate description of the client-server communication is as follows:
 7) The server retrieves the link to the video review of the book using **YouTube Data API v3**.
 8) The server sends the response to the client's request. The response contains the information about the book, most useful reviews and the link to the video book review on YouTube.
 
+### Project structure
+The following is a tree representing the project structure with all important files:
+```
+└───root directory
+    ├───app.py - main file of the web aplication linking all routes to python code
+    │   ├───index() function - provides "/" endpoint for main page
+    │   └───show_book_info_page() function - provides "/book_info" endpoint for receiving page with info about boook
+    ├───review_classes.py - provides the implementation of ReviewList ADT
+    │   ├───class Review
+    │   └───class ReviewList
+    ├───review_parser.py - provides functions for retrieving book reviews by scraping GoodReads, utilizes ReviewList ADT
+    │   ├───scrape_reviews() function - return reviews of the book given its ISBN
+    │   ... - some other helper methods
+    ├───goodreads_search.py - provides book search
+    │   ├───search_book() function - return info about books found by searching
+    │   ├───get_book_isbn() helper function - return ISBN of the book given its GoodReads id
+    │   └───element_to_dict() helper function - converts xml.etree.ElementTree.Element to the dictionary of dictionaries
+    ├───static
+    │   └───styles - a folder with css styles
+    │       ...
+    └───templates - HTML templates
+        ├───book.html
+        ├───index.html
+        └───layout.html
+```
+
 ## 💻 Usage: 
 
 1) Visit <a href="">www.bookgoogle.com</a>
-<br />
-<div style="font-size:20px">or</div>
 
-1) Clone this repository with ```git clone https://github.com/UstymHanyk/BookGoogle.git```
-2) Install the needed dependecies with ```pip install -r requirements.txt```
-3) To run the server locally, type the following commands in your terminal:
-```bash
+**or**
+
+1) Clone this repository with 
+```shell
+$ git clone https://github.com/UstymHanyk/BookGoogle.git
+```
+2) Install the needed dependecies with 
+```shell
+$ pip install -r requirements.txt
+```
+4) Replace the missing API keys in project files with your own GoodReads API key and Youtube API key.
+5) To run the server locally, type the following commands in your terminal:
+```shell
 $ export FLASK_APP=app.py
 $ python -m flask run
 ```
