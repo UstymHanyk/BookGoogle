@@ -22,7 +22,7 @@ def scrape_reviews_helper(isbn, page):
     """
     book_page_url = f"https://www.goodreads.com/api/reviews_widget_iframe?did=0&format=html&" \
                     f"hide_last_page=true&isbn={isbn}&links=660&min_rating=&page={page}&review_back=fff&stars=000&text=000"
-    # print(book_page_url)
+    print(book_page_url)
     webpage = requests_session.get(book_page_url)
     if webpage.status_code == 404:
         return
@@ -50,9 +50,12 @@ def scrape_reviews(isbn):
     helps speed up the process by 1000%.
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
+    rv = ReviewList()
+
     to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,4)]
+
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
     return reviews.clear()
 
-# print(scrape_reviews('8497644751').get_mood_range())
+# print(scrape_reviews('0366812173').reviews)

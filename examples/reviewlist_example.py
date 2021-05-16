@@ -29,7 +29,7 @@ def add_page_to_reviews(isbn: Union[str, int], reviews, page: Union[str, int]):
 if __name__ == "__main__":
     reviews = ReviewList()
     tasks = []
-    for i in range(10):
+    for i in range(4):
         tasks.append(dask.delayed(add_page_to_reviews)("1602701555", reviews, str(i)))
 
     dask.compute(*tasks)

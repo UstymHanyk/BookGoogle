@@ -12,7 +12,7 @@
         <div class="col-md-3  col-sm-12 image_container" style="{{book_cover_url}}">
         </div>
         <div class="col-md-9 col-sm-12">
-            <div class="row">
+
                 <div class=" author_container">
                 <span class="title">
                 {{book_dict["best_book"]["title"]}}
@@ -20,14 +20,16 @@
                     <p class="author">
                         by {{book_dict["best_book"]["author"]["name"]}}</p>
                     <hr class="bolder_hr">
-
                 </div>
-                <div class="col-md-3 glass_background rating_container">{{book_dict["average_rating"]}}/5 <br> <span
-                        class="smaller_text">average
-                    rating</span>
-                </div>
-                <div class="col-md-3 glass_background rating_container">{{book_dict["ratings_count"]}} <br> <span
-                        class="smaller_text">reviews</span></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="glass_background rating_container">{{book_dict["average_rating"]}}/5 <br> <span
+                                class="smaller_text">average
+                            rating</span>
+                        </div>
+                        <div class="glass_background rating_container">{{book_dict["ratings_count"]}} <br> <span
+                                class="smaller_text">reviews</span></div>
+                    </div>
             </div>
         </div>
     </div>
@@ -36,18 +38,18 @@
         <div class="col">
             <h1 class="review_title">Positive</h1>
             <p class="review">
-                {{reviews[0]}}
+                {{reviews[0].text}}
             </p>
         </div>
         <div class="col">
             <h1 class="review_title">Neutral</h1>
             <p class="review">
-                {{reviews[1]}}
+                {{reviews[1].text}}
             </p></div>
         <div class="col">
             <h1 class="review_title">Negative</h1>
             <p class="review">
-                {{reviews[0]}}
+                {{reviews[2].text}}
             </p>
         </div>
     </div>

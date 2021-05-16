@@ -78,8 +78,10 @@ class ReviewList:
 
     def add_review(self, review: Review):
         """Adds a new review if it's written in English."""
-        if detect(review.text.split('.')[0]) == 'en':
-            self.reviews.append(review)
+        # print(review.text.split('.')+'\n\n\n\n')
+        if not review.text.split('.')[0].isdigit():
+            if detect(review.text.split('.')[0]) == 'en':
+                self.reviews.append(review)
 
     def reliability_sort(self):
         """Sorts reviews by their rates, length and
@@ -124,3 +126,9 @@ class ReviewList:
                 result += self.get_mood_range(mood_lst=(1,))
             result.sort(reverse=True)
         return result
+
+# txt='3.5 StarsI like the can-do attitude Vance took with hounding Musk and wearing him down till he agreed to cooperate with this biography. I also appreciated all the "Holy crap, Musk is CRAZY. CRAZY like a fox," moments I had while reading this. The only thing that keeps this from being a 4-star book is that the reporting and writing leans too heavily on idolatry. There were passages where I literally cringed at how much of a fanboy Vance sounded like.'
+# rv=ReviewList()
+# review= Review(("MAx",'4',txt))
+# rv.add_review(review)
+# print(rv.reviews)

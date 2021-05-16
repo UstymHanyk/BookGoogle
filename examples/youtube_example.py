@@ -11,7 +11,7 @@ from pprint import pprint
 
 import requests
 
-API_KEY = "YOUR_KEY"
+API_KEY = "AIzaSyDgLXdyRnJwVLBX6xtsDgkrXrYuJnGRhLM"
 SEARCH_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/search"
 VIDEO_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/videos"
 

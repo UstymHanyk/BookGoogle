@@ -4,8 +4,8 @@ A usage example of Bookreads API.
 """
 
 import xml.etree.ElementTree as ET
-from pprint import pprint
-# from icecream import ic as pprint
+# from pprint import pprint
+from icecream import ic as pprint
 import time
 
 import requests
@@ -60,7 +60,8 @@ def search_book(search_string: str, search_by: str, num_books: str):
 
 def get_book_isbn(goodreads_id):
     response = requests.request(method="GET", url=f"https://www.goodreads.com/book/show/{goodreads_id}.xml?key=BdsXBvnvsl28OVnjElMyA")
-    pprint(response)
+    print(f"https://www.goodreads.com/book/show/{goodreads_id}.xml?key=BdsXBvnvsl28OVnjElMyA")
+    pprint('got isbn:',response)
     isbn = ET.fromstring(response.text).find('book').find('isbn')
     return isbn.text
 
@@ -80,8 +81,9 @@ def element_to_dict(element: ET.Element) -> dict:
 
 
 if __name__ == "__main__":
-    res = search_book("Macbeth", "title", 1)
+    res = search_book("12 rules for life", "title", 1)
     for book in res:
         pprint(book)
 
-    pprint(get_book_isbn("1896522"))
+    pprint(get_book_isbn("40121378"))
+    # pprint(get_book_isbn("62221762"))
