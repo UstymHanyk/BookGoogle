@@ -8,7 +8,7 @@ requests_session = requests.Session()
 def find_full_review_text(url):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     full_review_webpage = requests_session.get(url.attrs["href"])
-    soup = BeautifulSoup(full_review_webpage.content, "lxml", parse_only=only_review_tags)
+    soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
     if not review_raw_text:
         return "Error! Review text not found"
@@ -28,7 +28,7 @@ def scrape_reviews_helper(isbn, page):
     webpage = requests_session.get(book_page_url)
     if webpage.status_code == 404:
         return
-    soup = BeautifulSoup(webpage.content, "lxml")
+    soup = BeautifulSoup(webpage.content, "html.parser")
     names_raw = soup.find_all('a', itemprop="discussionUrl")  # find names of the review authors
     names = [name.text for name in names_raw]
 
@@ -60,4 +60,4 @@ def scrape_reviews(isbn):
     # print(len(reviews.reviews))
     return reviews.clear()
 
-# print(scrape_reviews('0366812173').reviews)
+# print(scrape_reviews('0345816021').reviews)
