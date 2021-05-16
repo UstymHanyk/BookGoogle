@@ -7,54 +7,100 @@
     <div class="circle rectangle"></div>
     <div class="circle square"></div>
 </div>
-<div class="container book_holder">
+<div class="container" id="book_container">
     <div class="row">
-        <div class="col-md-3  col-sm-12 image_container" style="{{book_cover_url}}">
+        <div class="col-md-3  col-sm-10 image_container" style="{{book_cover_url}}">
         </div>
         <div class="col-md-9 col-sm-12">
 
-                <div class=" author_container">
+            <div class=" author_container">
                 <span class="title">
                 {{book_dict["best_book"]["title"]}}
                     </span>
-                    <p class="author">
-                        by {{book_dict["best_book"]["author"]["name"]}}</p>
-                    <hr class="bolder_hr">
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="glass_background rating_container">{{book_dict["average_rating"]}}/5 <br> <span
-                                class="smaller_text">average
-                            rating</span>
-                        </div>
-                        <div class="glass_background rating_container">{{book_dict["ratings_count"]}} <br> <span
-                                class="smaller_text">reviews</span></div>
-                    </div>
+                <p class="author">
+                    by {{book_dict["best_book"]["author"]["name"]}}</p>
+                <hr class="bolder_hr">
             </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12" style="text-align:center">
+
+                    <div class="glass_background rating_container">{{book_dict["average_rating"]}}/5 <br> <span
+                            class="smaller_text">average
+                            rating</span>
+                    </div>
+                    <div class="glass_background rating_container">{{book_dict["ratings_count"]}} <br> <span
+                            class="smaller_text">reviews</span></div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="youtube_video_container">
+                      <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/{{youtube_video_id}}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>
+
+    {% if reviews|length >= 1 %}
     <br>
+    <div class="blurred_more_container">
+        <button onclick="myFunction()" id="myBtn">Read more</button>
+    </div>
     <div class="row" style="color:white">
         <div class="col">
             <h1 class="review_title">Positive</h1>
+            <p class="review_author">by {{reviews[0].author}}</p>
             <p class="review">
                 {{reviews[0].text}}
             </p>
         </div>
         <div class="col">
             <h1 class="review_title">Neutral</h1>
+            <p class="review_author">by {{reviews[1].author}}</p>
             <p class="review">
                 {{reviews[1].text}}
             </p></div>
+
+        {% if reviews|length == 3 %}
         <div class="col">
             <h1 class="review_title">Negative</h1>
+            <p class="review_author">by {{reviews[2].author}}</p>
             <p class="review">
                 {{reviews[2].text}}
             </p>
         </div>
+        {% endif %}
+
     </div>
-    </div>
+            {% endif %}
+
 </div>
 
+</div>
+<script>
+    function myFunction() {
+        var btnText = document.getElementById("myBtn");
+        var book_container = document.getElementById("book_container");
+
+        if (btnText.innerHTML === "Read less") {
+            btnText.innerHTML = "Read more";
+            book_container.style.height = "80vh";
+            book_container.style.overflow_y = "hidden";
+        } else {
+            btnText.innerHTML = "Read less";
+            book_container.style.overflow_y = "visible";
+            book_container.style.height = "auto";
+        }
+    }
+
+</script>
 {% endblock %}
 

@@ -1,0 +1,5 @@
+dask
+flask
+nltk
+bs4
+langdetect

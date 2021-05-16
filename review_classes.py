@@ -4,7 +4,6 @@ about book review, written in english, and class 'ReviewList',
 which keeps all book reviews.
 """
 
-import re
 from nltk.sentiment import SentimentIntensityAnalyzer
 from typing import List
 from langdetect import detect
@@ -78,7 +77,6 @@ class ReviewList:
 
     def add_review(self, review: Review):
         """Adds a new review if it's written in English."""
-        # print(review.text.split('.')+'\n\n\n\n')
         if not review.text.split('.')[0].isdigit():
             if detect(review.text.split('.')[0]) == 'en':
                 self.reviews.append(review)
