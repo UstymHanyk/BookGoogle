@@ -3,25 +3,48 @@ from bs4 import BeautifulSoup, SoupStrainer
 import dask
 from review_classes import ReviewList, Review
 from time import time, process_time
+import signal
 
 requests_session = requests.Session()
+
+class TimeoutException(Exception):
+    """ Simple Exception to be called on timeouts. """
+    pass
+
+def _timeout(signum, frame):
+    """ Raise an TimeoutException.
+
+    This is intended for use as a signal handler.
+    The signum and frame arguments passed to this are ignored.
+
+    """
+    # Raise TimeoutException with system default timeout message
+    raise TimeoutException()
+
+# Set the handler for the SIGALRM signal:
+signal.signal(signal.SIGALRM, _timeout)
+# Send the SIGALRM signal in 10 seconds:
+
 
 
 @dask.delayed
 def find_full_review_text(url, iteration):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
-    start_time = process_time()
-    try:
-        start_time2 = process_time()
-        full_review_webpage = requests.get(url.attrs["href"], timeout=2)
-        diff = process_time() -start_time2
-        print(f"Executed {iteration} in  {process_time() - start_time}seconds")
-    except:
-        print(f"{iteration} timeout {process_time() - start_time:.2f} sec")
-        return "Помилка"
 
-    if diff > 2.5:
-        print(f"---{iteration} overtime --- {process_time() - start_time:.2f} seconds to make 1 request {url.attrs['href']}")
+    try:
+        signal.alarm(3)
+        start_time2 = process_time()
+        full_review_webpage = requests.get(url.attrs["href"])
+        diff = process_time() -start_time2
+        print(f"Executed {iteration} in  {diff}seconds")
+    except TimeoutException:
+        print(f"{iteration} timeout {process_time() -start_time2} sec")
+        return "Помилка"
+    finally:
+        signal.alarm(0)
+
+    if diff > 3.2:
+        print(f"--- {iteration} overtime --- {diff} seconds to make 1 request {url.attrs['href']}")
     # print(f"---{iteration} {process_time(-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
 
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
@@ -61,11 +84,11 @@ def scrape_reviews_helper(isbn, page):
     for full_review_link in full_review_links:
         full_review_texts.append(find_full_review_text(full_review_link, iteration / 10 + page))
         iteration += 1
-    print(f"-Finished page({page}) surface scraping in {process_time() - start_review_page_scrape:.2f}")
+    # print(f"-Finished page({page}) surface scraping in {process_time() - start_review_page_scrape:.2f}")
 
     start_computing = process_time()
     computed_reviews = zip(names, ratings, dask.compute(*full_review_texts))
-    print(f"--Finished {page} full text computing in {process_time() - start_computing:.2f}")
+    # print(f"--Finished {page} full text computing in {process_time() - start_computing:.2f}")
 
     # start_adding_time = process_time(
     for review_tuple in computed_reviews:
@@ -89,4 +112,4 @@ def scrape_reviews(isbn):
     return reviews.clear()
 
 
-# scrape_reviews('0140449337')
+# print(scrape_reviews('0140449337'))
