@@ -44,8 +44,10 @@ def scrape_reviews_helper(isbn, page):
     full_review_links = soup.find_all('link',itemprop="url")  # find links to the full reviews
     for full_review_link in full_review_links:
         full_review_texts.append(find_full_review_text(full_review_link))
-    computed_reviews = zip(names, ratings, dask.compute(*full_review_texts))
     print(f"Finished page({page}) scraping in {time() - start_review_page_scrape}")
+     # = time()
+
+    computed_reviews = zip(names, ratings, dask.compute(*full_review_texts))
     start_adding_time = time()
     for review_tuple in computed_reviews:
         reviews.add_review(Review(review_tuple))
@@ -60,7 +62,7 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,10)]
+    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,2)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
