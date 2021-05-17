@@ -10,6 +10,7 @@ def find_full_review_text(url):
     full_review_webpage = requests_session.get(url.attrs["href"])
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
+    print("don't sleep")
     if not review_raw_text:
         return "Error! Review text not found"
     return review_raw_text.text.strip()  # add review text to the reviews list
@@ -53,11 +54,10 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-
     to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,4)]
-
+    print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
     return reviews.clear()
 
-# print(scrape_reviews('0345816021').reviews)
+# print(scrape_reviews('0307352145'))
