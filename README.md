@@ -1,7 +1,7 @@
 # BookGoogle
 
 ## Description: 
-**<a href="">BookGoogle</a>** is a website aimed at making it easier for its users to decide on what book to read.
+**<a href="https://book-google-app.herokuapp.com/">BookGoogle</a>** is a website aimed at making it easier for its users to decide on what book to read.
 
 It provides its user with the following functionality:
 1) Searching books by title.
@@ -64,7 +64,7 @@ The approximate description of the client-server communication is as follows:
 8) The server sends the response to the client's request. The response contains the information about the book, most useful reviews and the link to the video book review on YouTube.
 
 ### Project structure
-The following is a tree representing the project structure with all important files:
+The following is a tree representing the project structure with all the important files:
 ```
 └───root directory
     ├───app.py - main file of the web aplication linking all routes to python code
@@ -108,7 +108,7 @@ The class has the following methods:
 
 ## 💻 Usage: 
 
-1) Visit <a href="">www.bookgoogle.com</a>
+1) Visit <a href="https://book-google-app.herokuapp.com/">book-google-app.herokuapp.com/</a>
 
 **or**
 
