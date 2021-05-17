@@ -35,7 +35,7 @@ def show_book_info_page():
 
     video_start = time()
     # youtube_video_id = get_video_ids(book_dict["best_book"]["title"] + " book review",1)[0]
-    youtube_video_id = "ChWWLoSdy0"
+    youtube_video_id = "-ChWWLoSdy0"
     print(f"Found video. Took {time() - video_start} seconds")
 
     print(f"Finished. Took {time() - start_time} seconds")
