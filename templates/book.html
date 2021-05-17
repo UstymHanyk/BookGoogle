@@ -96,11 +96,6 @@
             book_container.style.height = "auto";
         }
     }
-
-    // $.getJSON('/get_reviews',
-    //     function (data, textStatus, jqXHR) {
-    //         alert(data);
-    //     })
     var bookId = {{book_id}}
 
     $(document).ready(function () {
@@ -112,26 +107,25 @@
 
         $.getJSON("/get_reviews?book_id=" + bookId, function (result) {
             console.log(result);
-            document.getElementById("positive_container").style.display = "block";
-            $.each(result["result"], function (key, val) {
-                console.log(key)
+            for (key in result["result"]) {
                 $("#read_more_container").show();
                 $("#review_container").show();
 
                 if (key == 0)
+                    console.log(key)
                     document.getElementById("positive_container").style.display = "block";
-                document.getElementById("pos_auth").textContent = "by " + val["author"];
-                document.getElementById("pos_rev").textContent = val["text"];
+                    document.getElementById("pos_auth").textContent = "by " + result["result"][0]["author"];
+                    document.getElementById("pos_rev").textContent = result["result"][0]["text"];
                 if (key == 1)
                     document.getElementById("neutral_container").style.display = "block";
-                document.getElementById("neu_auth").textContent = "by " + val["author"];
-                document.getElementById("neu_rev").textContent = val["text"];
+                    document.getElementById("neu_auth").textContent = "by " + result["result"][1]["author"];
+                    document.getElementById("neu_rev").textContent = result["result"][1]["text"];
                 if (key == 2)
                     document.getElementById("negative_container").style.display = "block";
-                document.getElementById("neg_auth").textContent = "by " + val["author"];
-                document.getElementById("neg_rev").textContent = val["text"];
+                    document.getElementById("neg_auth").textContent = "by " + result["result"][2]["author"];
+                    document.getElementById("neg_rev").textContent = result["result"][2]["text"];
 
-            });
+            };
         });
     });
 </script>
