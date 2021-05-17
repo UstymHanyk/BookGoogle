@@ -33,8 +33,45 @@
 
           <div class="body" role="main">
             
-  <section id="goodreads-search-module">
-<h1>goodreads_search module<a class="headerlink" href="#goodreads-search-module" title="Permalink to this headline">¶</a></h1>
+  <section id="module-goodreads_search">
+<span id="goodreads-search-module"></span><h1>goodreads_search module<a class="headerlink" href="#module-goodreads_search" title="Permalink to this headline">¶</a></h1>
+<p>bookreads_example.py
+A usage example of Bookreads API.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="goodreads_search.element_to_dict">
+<span class="sig-prename descclassname"><span class="pre">goodreads_search.</span></span><span class="sig-name descname"><span class="pre">element_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">xml.etree.ElementTree.Element</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#goodreads_search.element_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert XML root to dictionary with possibly many inner dictionaries.
+The keys of the dictionaries are tags of XML elements.
+Note: make sure that elements with the same parent have different tags.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="goodreads_search.get_book_isbn">
+<span class="sig-prename descclassname"><span class="pre">goodreads_search.</span></span><span class="sig-name descname"><span class="pre">get_book_isbn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goodreads_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#goodreads_search.get_book_isbn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="goodreads_search.search_book">
+<span class="sig-prename descclassname"><span class="pre">goodreads_search.</span></span><span class="sig-name descname"><span class="pre">search_book</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_by</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_books</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#goodreads_search.search_book" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the result of the book search.
+Parameters
+———-
+search_string: str</p>
+<blockquote>
+<div><p>the phrase to search for</p>
+</div></blockquote>
+<dl class="simple">
+<dt>search_by: str</dt><dd><p>Should be one of the following: ‘title’, ‘author’, ‘all’.
+The parameter tells whether to search by title, author or both.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>list of dictionaries</dt><dd><p>A list containing dictionaries that contain information about the books.
+The order of the books remains the same as in the original API response.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

@@ -33,8 +33,86 @@
 
           <div class="body" role="main">
             
-  <section id="review-classes-module">
-<h1>review_classes module<a class="headerlink" href="#review-classes-module" title="Permalink to this headline">¶</a></h1>
+  <section id="module-review_classes">
+<span id="review-classes-module"></span><h1>review_classes module<a class="headerlink" href="#module-review_classes" title="Permalink to this headline">¶</a></h1>
+<p>Module contains class ‘Review’, which contains information
+about book review, written in english, and class ‘ReviewList’,
+which keeps all book reviews.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="review_classes.Review">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">review_classes.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.Review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Information about the review.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.Review.calc_neutrality">
+<span class="sig-name descname"><span class="pre">calc_neutrality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.Review.calc_neutrality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates neutral lexic’s percentage
+in the text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<em>float</em>) – Neutrality.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="review_classes.ReviewList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">review_classes.</span></span><span class="sig-name descname"><span class="pre">ReviewList</span></span><a class="headerlink" href="#review_classes.ReviewList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keeps and sort Review objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.add_review">
+<span class="sig-name descname"><span class="pre">add_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.add_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new review if it’s written in English.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>review</strong> (<a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><em>Review</em></a>) – New review.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears itself and returns all of the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<a class="reference internal" href="#review_classes.ReviewList" title="review_classes.ReviewList"><em>ReviewList</em></a>) – Copy of object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.get_mood_range">
+<span class="sig-name descname"><span class="pre">get_mood_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mood_lst</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5,</span> <span class="pre">3,</span> <span class="pre">2]</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><span class="pre">review_classes.Review</span></a><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#review_classes.ReviewList.get_mood_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of three most reliable
+reviews from the all given.</p>
+<p>Gets the sorted list of reviews and returns
+list with first positive, nutral and negative reviews
+(rating 5, 3 and 2 in accordance). There would be our
+most reliable reviews from every category.</p>
+<p>If there are no reviews with ratings5 or 2, the method
+will return reviews with ratings 4 or 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<em>List</em><em>[</em><a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><em>Review</em></a><em>]</em>) – List of Review objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.reliability_sort">
+<span class="sig-name descname"><span class="pre">reliability_sort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.reliability_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts reviews by their rates, length and
+number of neutral language in descending order.
+Here the adapted method __lt__ for class
+Reviews is used.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
