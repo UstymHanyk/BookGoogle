@@ -63,6 +63,7 @@ def scrape_reviews(isbn):
     """
 
     to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,2)]
+    to_be_computed = [scrape_reviews_helper(isbn,"1") for page in range(1,2)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
