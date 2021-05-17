@@ -11,30 +11,47 @@ from langdetect.lang_detect_exception import LangDetectException
 
 
 class Review:
-    """Information about the review."""
+    """
+    Information about the review.
+    """
 
-    def __init__(self, info_tuple: tuple):
-        """Initializes the class."""
+    def __init__(self, info_tuple):
+        """
+        Initializes the class.
+
+        :type info_tuple: tuple
+        :param info_tuple: Information about the review.
+        """
         self.author = info_tuple[0]
         self.rating = info_tuple[1]
         self.text = info_tuple[2]
         self.length = len(info_tuple[2])
         self.neutrality = self.calc_neutrality()
 
-    def calc_neutrality(self) -> float:
-        """Calculates neutral lexic's percentage
-        in the text."""
+    def calc_neutrality(self):
+        """
+        Calculates neutral lexic's percentage
+        in the text.
+
+        :type output: float
+        :param output: Neutrality.
+        """
         sia_object = SentimentIntensityAnalyzer()
         return sia_object.polarity_scores(self.text)['neu']
 
     def __lt__(self, other) -> bool:
-        """Compares reviews' ratings and reliability
+        """
+        Compares reviews' ratings and reliability
         by three aspects.
         1 - rating
         2 - amount of neutral language
         3 - length of the text
         Method is needed for future comparing of reviews
-        and sorting."""
+        and sorting.
+
+        :type other: Review
+        :param other: Another review.        
+        """
         if self.rating == other.rating:
             if self.neutrality == other.neutrality:
                 if self.length < other.length:
@@ -53,15 +70,22 @@ neutrality of text: {self.neutrality}\n"
 
 
 class ReviewList:
-    """Keeps and sort Review objects."""
+    """
+    Keeps and sort Review objects.
+    """
 
     def __init__(self):
         """Initializes the class."""
         self.reviews = []
 
     def __repr__(self) -> str:
-        """Returns the string to represent the
-        class."""
+        """
+        Returns the string to represent the
+        class.
+
+        :type output: str
+        :param output: Representance of class object.
+        """
         final_str = ''
         for review in self.reviews:
             final_str += str(review)
@@ -70,14 +94,22 @@ class ReviewList:
     def clear(self):
         """
         Clears itself and returns all of the data
+        
+        :type output: ReviewList
+        :param output: Copy of object.
         """
         deleted_data = ReviewList()
         deleted_data.reviews = self.reviews
         self.reviews = []
         return deleted_data
 
-    def add_review(self, review: Review):
-        """Adds a new review if it's written in English."""
+    def add_review(self, review):
+        """
+        Adds a new review if it's written in English.
+
+        :type review: Review
+        :param review: New review.
+        """
         try:
             if detect(review.text.split('.')[0]) == 'en':
                 self.reviews.append(review)
@@ -85,10 +117,12 @@ class ReviewList:
             print(f"Language of ({review.text.split('.')[0]}) could not be detect")
 
     def reliability_sort(self):
-        """Sorts reviews by their rates, length and
+        """
+        Sorts reviews by their rates, length and
         number of neutral language in descending order.
         Here the adapted method __lt__ for class
-        Reviews is used."""
+        Reviews is used.
+        """
         self.reviews.sort(reverse=True)
 
     def get_mood_range(self, mood_lst=[5, 3, 2]) -> List[Review]:
@@ -103,6 +137,9 @@ class ReviewList:
 
         If there are no reviews with ratings5 or 2, the method
         will return reviews with ratings 4 or 1.
+
+        :type output: List[Review]
+        :param output: List of Review objects.        
         """
         self.reliability_sort()
         result = []
