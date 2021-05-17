@@ -12,21 +12,20 @@ def find_full_review_text(url, iteration):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     start_time = process_time()
     try:
-        full_review_webpage = requests.get(url.attrs["href"], timeout=1)
+        start_time2 = process_time()
+        full_review_webpage = requests.get(url.attrs["href"], timeout=2)
+        diff = process_time() -start_time2
         print(f"Executed {iteration} in  {process_time() - start_time}seconds")
-
-    except requests.exceptions.Timeout:
+    except:
         print(f"{iteration} timeout {process_time() - start_time:.2f} sec")
         return "Помилка"
 
-
-    if process_time() - start_time > 3:
+    if diff > 2.5:
         print(f"---{iteration} overtime --- {process_time() - start_time:.2f} seconds to make 1 request {url.attrs['href']}")
     # print(f"---{iteration} {process_time(-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
 
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
-    start_time = 0
     if not review_raw_text:
         return "Error! Review text not found"
     return review_raw_text.text.strip()  # add review text to the reviews list
@@ -90,4 +89,4 @@ def scrape_reviews(isbn):
     return reviews.clear()
 
 
-# print(scrape_reviews('0140449337'))
+# scrape_reviews('0140449337')
