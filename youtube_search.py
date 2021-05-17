@@ -9,7 +9,7 @@ The quota cost of this example is 101 quota units.
 from pprint import pprint
 import requests
 
-API_KEY = "AIzaSyDgLXdyRnJwVLBX6xtsDgkrXrYuJnGRhLM"
+API_KEY = "AIzaSyCrizaLvv-kDIqANKdDRRppNy1m-wcZDuI"
 SEARCH_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/search"
 VIDEO_LIST_ENDPOINT = "https://www.googleapis.com/youtube/v3/videos"
 
@@ -98,7 +98,7 @@ def get_video_info(video_id: str) -> dict:
 
 
 if __name__ == '__main__':
-    video_ids = get_video_ids("the catcher in the rye", 21)
+    video_ids = get_video_ids("the catcher in the rye", 2)
 
     for video_id in video_ids:
         pprint(get_video_info(video_id))
