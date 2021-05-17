@@ -9,7 +9,11 @@ requests_session = requests.Session()
 def find_full_review_text(url, iteration):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     start_time = time()
-    full_review_webpage = requests_session.get(url.attrs["href"])
+    try:
+        full_review_webpage = requests_session.get(url.attrs["href"], timeout=3)
+    except requests.exceptions.ReadTimeout:
+        print("timeout")
+        return "Помилка"
     # full_review_webpage = requests.get(url.attrs["href"])
 
     if time() - start_time > 3:

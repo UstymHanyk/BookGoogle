@@ -163,3 +163,4 @@ class ReviewList:
                 result += self.get_mood_range(mood_lst=(1,))
             result.sort(reverse=True)
         return result
+
