@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 from goodreads_search import search_book, get_book_isbn
 from review_parser import scrape_reviews
@@ -26,21 +26,34 @@ def show_book_info_page():
 
     book_cover_url = f"background-image:url('{book_cover_url}');"
 
-    book_isbn = get_book_isbn(book_dict["best_book"]["id"])
+    video_start = time()
+    youtube_video_id = "sd"
+    # youtube_video_id = get_video_ids(book_dict["best_book"]["title"] + " book review",1)[0]
+    print(f"Found video. Took {time() - video_start} seconds")
+
+    print(f"Finished. Took {time() - start_time} seconds")
+
+    return render_template("book.html", book_dict=book_dict, book_cover_url=book_cover_url,
+                           youtube_video_id = youtube_video_id, book_id = str(book_dict["best_book"]["id"]))
+    # return render_template("book.html", book_dict=book_dict, reviews=reviews, book_cover_url=book_cover_url,
+    #                        youtube_video_id = youtube_video_id)
+
+@app.route("/get_reviews")
+def get_reviews():
+    book_id = request.args.get("book_id")
+    pprint("book_id")
+    book_isbn = get_book_isbn(book_id)
     pprint(book_isbn)
 
     scrape_start = time()
     reviews = scrape_reviews(book_isbn).get_mood_range()
     print(f"Scraped. Took {time() - scrape_start} seconds")
 
-    video_start = time()
-    youtube_video_id = get_video_ids(book_dict["best_book"]["title"] + " book review",1)[0]
-    print(f"Found video. Took {time() - video_start} seconds")
-
-    print(f"Finished. Took {time() - start_time} seconds")
-    return render_template("book.html", book_dict=book_dict, reviews=reviews, book_cover_url=book_cover_url,
-                           youtube_video_id = youtube_video_id)
-
-
+    review_dict={}
+    for id, review in enumerate(reviews):
+        review_dict[id] = {"text": review.text, "author": review.author}
+    #
+    # review_dict="fheruhiu"
+    return jsonify(result=review_dict)
 # enter the code below to launch the web server
 # FLASK_APP=app.py FLASK_ENV=development flask run

@@ -24,7 +24,7 @@
 
 .title_text {
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2.25rem;
 }
 
 body {
@@ -137,7 +137,7 @@ input[type=submit]:hover {
 
 .rating_container {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 5% 0 0 5%;
 }
 
@@ -301,7 +301,7 @@ input[type=submit]:hover {
 }
 
 .smaller_text {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 .blurred_more_container {

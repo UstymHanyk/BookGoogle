@@ -9,18 +9,22 @@ requests_session = requests.Session()
 def find_full_review_text(url, iteration):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     start_time = time()
-    full_review_webpage = requests_session.get(url.attrs["href"])
+    try:
+        full_review_webpage = requests_session.get(url.attrs["href"], timeout=3)
+    except requests.exceptions.ReadTimeout:
+        print("timeout")
+        return "Помилка"
     # full_review_webpage = requests.get(url.attrs["href"])
 
     if time() - start_time > 3:
         print(f"---{iteration} overtime --- {time() - start_time:.2f} seconds to make 1 request {url.attrs['href']}")
-    print(f"---{iteration} {time()-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
+    # print(f"---{iteration} {time()-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
 
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
 
     if not review_raw_text:
-        return "Error! Review text not found"
+        return "Помилка"
     return review_raw_text.text.strip()  # add review text to the reviews list
 
 reviews = ReviewList()
