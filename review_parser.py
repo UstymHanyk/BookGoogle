@@ -20,8 +20,6 @@ def find_full_review_text(url, iteration):
         return "Помилка"
 
 
-    # full_review_webpage = requests.get(url.attrs["href"])
-
     if process_time() - start_time > 3:
         print(f"---{iteration} overtime --- {process_time() - start_time:.2f} seconds to make 1 request {url.attrs['href']}")
     # print(f"---{iteration} {process_time(-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
