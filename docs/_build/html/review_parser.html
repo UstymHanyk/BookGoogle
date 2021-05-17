@@ -33,8 +33,17 @@
 
           <div class="body" role="main">
             
-  <section id="review-parser-module">
-<h1>review_parser module<a class="headerlink" href="#review-parser-module" title="Permalink to this headline">¶</a></h1>
+  <section id="module-review_parser">
+<span id="review-parser-module"></span><h1>review_parser module<a class="headerlink" href="#module-review_parser" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="review_parser.scrape_reviews">
+<span class="sig-prename descclassname"><span class="pre">review_parser.</span></span><span class="sig-name descname"><span class="pre">scrape_reviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isbn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#review_parser.scrape_reviews" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrapes 4 pages of reviews from Goodreads using scrape_reviews_helper().</p>
+<p>In order to increase performance the multitasking module dask is used, which
+helps speed up the process by 1000%.
+After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.</p>
+</dd></dl>
+
 </section>
 
 

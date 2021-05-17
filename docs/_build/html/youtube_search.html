@@ -32,8 +32,52 @@
 
           <div class="body" role="main">
             
-  <section id="youtube-search-module">
-<h1>youtube_search module<a class="headerlink" href="#youtube-search-module" title="Permalink to this headline">¶</a></h1>
+  <section id="module-youtube_search">
+<span id="youtube-search-module"></span><h1>youtube_search module<a class="headerlink" href="#module-youtube_search" title="Permalink to this headline">¶</a></h1>
+<p>youtube_example.py</p>
+<p>A usage example of YouTube Data API v3</p>
+<p>The quota cost of this example is 101 quota units.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="youtube_search.get_video_ids">
+<span class="sig-prename descclassname"><span class="pre">youtube_search.</span></span><span class="sig-name descname"><span class="pre">get_video_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_string</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_videos</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#youtube_search.get_video_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ids of the most relevant videos associated with the search string.</p>
+<dl class="simple">
+<dt>search_string<span class="classifier">str</span></dt><dd><p>a search string for finding the videos</p>
+</dd>
+<dt>num_videos<span class="classifier">int</span></dt><dd><p>number of returned ids of videos</p>
+</dd>
+</dl>
+<p>list of strings - list of video ids</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="youtube_search.get_video_info">
+<span class="sig-prename descclassname"><span class="pre">youtube_search.</span></span><span class="sig-name descname"><span class="pre">get_video_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#youtube_search.get_video_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return information about the video with passed in video id.</p>
+<dl class="simple">
+<dt>videoId<span class="classifier">str</span></dt><dd><p>Id of the video to return information about</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dict</dt><dd><dl class="simple">
+<dt>A dictionary with the following keys:</dt><dd><ul class="simple">
+<li><p>channelTitle</p></li>
+<li><p>commentCount</p></li>
+<li><p>description</p></li>
+<li><p>dislikeCount</p></li>
+<li><p>duration</p></li>
+<li><p>likeCount</p></li>
+<li><p>publishedAt</p></li>
+<li><p>thumbnail</p></li>
+<li><p>title</p></li>
+<li><p>viewCount</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
