@@ -3,10 +3,8 @@ from bs4 import BeautifulSoup, SoupStrainer
 import dask
 from review_classes import ReviewList, Review
 from time import time
-from requests_futures.sessions import FuturesSession
 
-# requests_session = requests.Session()
-requests_session = FuturesSession()
+requests_session = requests.Session()
 @dask.delayed
 def find_full_review_text(url, iteration):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
@@ -18,7 +16,7 @@ def find_full_review_text(url, iteration):
         print(f"---{iteration} overtime --- {time() - start_time:.2f} seconds to make 1 request {url.attrs['href']}")
     print(f"---{iteration} {time()-start_time:.2f} seconds to make 1 request {url.attrs['href']}")
 
-    soup = BeautifulSoup(full_review_webpage.result().content, "html.parser", parse_only=only_review_tags)
+    soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
 
     if not review_raw_text:
@@ -37,8 +35,7 @@ def scrape_reviews_helper(isbn, page):
                     f"hide_last_page=true&isbn={isbn}&links=660&min_rating=&page={page}&review_back=fff&stars=000&text=000"
     print(book_page_url)
     start_review_page_scrape = time()
-    webpage = requests_session.get(book_page_url).result()
-    # webpage = requests.get(book_page_url)
+    webpage = requests_session.get(book_page_url)
     if webpage.status_code == 404:
         return
     soup = BeautifulSoup(webpage.content, "html.parser")
@@ -75,7 +72,7 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,12)]
+    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,7)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
