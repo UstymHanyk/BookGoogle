@@ -104,6 +104,7 @@ class ReviewList:
         If there are no reviews with ratings5 or 2, the method
         will return reviews with ratings 4 or 1.
         """
+        self.reliability_sort()
         result = []
         index = 0
 
@@ -117,19 +118,11 @@ class ReviewList:
 
         if len(result) < 3 and len(mood_lst) > 2:
             if any(review.rating == 2 for review in result) is False and \
-                    any(review.rating == 5 for review in result) is False:
-                # self.get_mood_range(mood_lst=[4, 1])
+                any(review.rating == 5 for review in result) is False:
                 result += self.get_mood_range(mood_lst=[4, 1])
-                # result += self.get_mood_range(mood_lst=[4])
             elif not any(review.rating == 5 for review in result):
                 result += self.get_mood_range(mood_lst=[4])
             elif not any(review.rating == 2 for review in result):
                 result += self.get_mood_range(mood_lst=(1,))
             result.sort(reverse=True)
         return result
-
-# txt='3.5 StarsI like the can-do attitude Vance took with hounding Musk and wearing him down till he agreed to cooperate with this biography. I also appreciated all the "Holy crap, Musk is CRAZY. CRAZY like a fox," moments I had while reading this. The only thing that keeps this from being a 4-star book is that the reporting and writing leans too heavily on idolatry. There were passages where I literally cringed at how much of a fanboy Vance sounded like.'
-# rv=ReviewList()
-# review= Review(("MAx",'4',txt))
-# rv.add_review(review)
-# print(rv.reviews)

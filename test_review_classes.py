@@ -21,6 +21,7 @@ read in my life. The plot is okay and illustrations are good."))
         self.review6 = Review(('V', 1, 'slkлаб джedai linьлдж'))
         self.review7 = Review(('Anna', 2, 'This is a bad book.'))
         self.review8 = Review(('Xena', 4, "A very cool book. Read it!"))
+        self.review9 = Review(('Andy', 3, "A very good book. Amazing!"))
 
     def test_correct_review(self):
         self.assertEqual(self.review.rating, 5)
@@ -32,7 +33,17 @@ read in my life. The plot is okay and illustrations are good."))
     def test_reviews_compare(self):
         self.assertFalse(self.review < self.review2)  # reviews with different rating
         self.assertTrue(self.review2 < self.review)
+
+        # similar ratings, different neutrality
+        self.assertLess(self.review9.neutrality, self.review3.neutrality)
+        self.assertTrue(self.review9 < self.review3)
+
+        # same neutrality
+        self.assertTrue(self.review2.neutrality == self.review3.neutrality)
+        # different length of text
+        self.assertGreater(self.review2.length, self.review3.length)
         self.assertFalse(self.review2 < self.review3)  # reviews with similar rating
+
 
     def test_add_review_list(self):
         reviews = ReviewList()
@@ -51,20 +62,32 @@ read in my life. The plot is okay and illustrations are good."))
         reviews.add_review(self.review7)  # rating: 2
         reviews.add_review(self.review2)  # rating: 3
         reviews.add_review(self.review)   # rating: 5
-        reviews.reliability_sort()
+        # reviews.reliability_sort()
         self.assertEqual(len(reviews.reviews), 3)
-        self.assertEqual(reviews.reviews[0].rating, 5)
         self.assertEqual(len(reviews.get_mood_range()), 3) # reviews with rat. 5, 3, 2
+        self.assertEqual(reviews.reviews[0].rating, 5)
 
     def test_review_list_sorting2(self):
         reviews = ReviewList()
         reviews.add_review(self.review8)  # rating: 4
         reviews.add_review(self.review2)  # rating: 3
         reviews.add_review(self.review7)  # rating: 2
-        reviews.reliability_sort()
-        self.assertEqual(len(reviews.reviews), 3)
-        self.assertEqual(reviews.reviews[0].rating, 4)
+        # reviews.reliability_sort()
+        
         self.assertEqual(len(reviews.get_mood_range()), 3) # reviews with rat. 4, 3, 2
+        self.assertEqual(reviews.reviews[0].rating, 4)
+        self.assertEqual(len(reviews.reviews), 3)
+
+    def test_review_list_sorting3(self):
+        reviews = ReviewList()
+        reviews.add_review(self.review8)  # rating: 4
+        reviews.add_review(self.review)   # rating: 5
+        reviews.add_review(self.review7)  # rating: 2
+        # no neutral reviews
+        self.assertEqual(len(reviews.get_mood_range()), 2) # reviews with rat. 5, 2
+        self.assertEqual(reviews.get_mood_range()[0].rating, 5)
+        self.assertEqual(reviews.get_mood_range()[1].rating, 2)
+        self.assertEqual(len(reviews.reviews), 3)
 
     def tearDown(self) -> None:
         return super(TestReviews, self).tearDown()
