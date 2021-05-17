@@ -62,13 +62,14 @@
                 {{reviews[0].text}}
             </p>
         </div>
+        {% if reviews|length >= 2 %}
         <div class="col">
             <h1 class="review_title">Neutral</h1>
             <p class="review_author">by {{reviews[1].author}}</p>
             <p class="review">
                 {{reviews[1].text}}
             </p></div>
-
+        {% endif %}
         {% if reviews|length == 3 %}
         <div class="col">
             <h1 class="review_title">Negative</h1>

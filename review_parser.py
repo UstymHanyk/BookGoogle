@@ -64,7 +64,7 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,4)]
+    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,2)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
