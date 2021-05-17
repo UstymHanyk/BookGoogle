@@ -7,3 +7,5 @@ gunicorn
 requests
 lxml
 requests-futures
+Sphinx
+rinohtype
