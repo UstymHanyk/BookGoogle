@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>review_classes module &#8212; BookGoogle 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="review_parser module" href="review_parser.html" />
+    <link rel="prev" title="goodreads_search module" href="goodreads_search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-review_classes">
+<span id="review-classes-module"></span><h1>review_classes module<a class="headerlink" href="#module-review_classes" title="Permalink to this headline">¶</a></h1>
+<p>Module contains class ‘Review’, which contains information
+about book review, written in english, and class ‘ReviewList’,
+which keeps all book reviews.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="review_classes.Review">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">review_classes.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.Review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Information about the review.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.Review.calc_neutrality">
+<span class="sig-name descname"><span class="pre">calc_neutrality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.Review.calc_neutrality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates neutral lexic’s percentage
+in the text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<em>float</em>) – Neutrality.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="review_classes.ReviewList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">review_classes.</span></span><span class="sig-name descname"><span class="pre">ReviewList</span></span><a class="headerlink" href="#review_classes.ReviewList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Keeps and sort Review objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.add_review">
+<span class="sig-name descname"><span class="pre">add_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.add_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new review if it’s written in English.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>review</strong> (<a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><em>Review</em></a>) – New review.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears itself and returns all of the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<a class="reference internal" href="#review_classes.ReviewList" title="review_classes.ReviewList"><em>ReviewList</em></a>) – Copy of object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.get_mood_range">
+<span class="sig-name descname"><span class="pre">get_mood_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mood_lst</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5,</span> <span class="pre">3,</span> <span class="pre">2]</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><span class="pre">review_classes.Review</span></a><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#review_classes.ReviewList.get_mood_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of three most reliable
+reviews from the all given.</p>
+<p>Gets the sorted list of reviews and returns
+list with first positive, nutral and negative reviews
+(rating 5, 3 and 2 in accordance). There would be our
+most reliable reviews from every category.</p>
+<p>If there are no reviews with ratings5 or 2, the method
+will return reviews with ratings 4 or 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output</strong> (<em>List</em><em>[</em><a class="reference internal" href="#review_classes.Review" title="review_classes.Review"><em>Review</em></a><em>]</em>) – List of Review objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="review_classes.ReviewList.reliability_sort">
+<span class="sig-name descname"><span class="pre">reliability_sort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#review_classes.ReviewList.reliability_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts reviews by their rates, length and
+number of neutral language in descending order.
+Here the adapted method __lt__ for class
+Reviews is used.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">BookGoogle</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">BookGoogle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app.html">app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="goodreads_search.html">goodreads_search module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">review_classes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="review_parser.html">review_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_review_classes.html">test_review_classes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="youtube_search.html">youtube_search module</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">BookGoogle</a><ul>
+      <li>Previous: <a href="goodreads_search.html" title="previous chapter">goodreads_search module</a></li>
+      <li>Next: <a href="review_parser.html" title="next chapter">review_parser module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Ustym Hanyk, Bogdan Magometa, Nadiia Zaiachkovska, Daryna Cheban, Dmytro Komarynskiy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/review_classes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
