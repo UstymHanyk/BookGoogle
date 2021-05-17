@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup, SoupStrainer
 import dask
 from review_classes import ReviewList, Review
-from time import time
+from time import time, sleep
 
 requests_session = requests.Session()
 @dask.delayed
@@ -10,10 +10,10 @@ def find_full_review_text(url):
     start_time = time()
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     full_review_webpage = requests_session.get(url.attrs["href"])
-    print(f"{time()-start_time} seconds to make 1 request{url.attrs['href']}")
-
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
+    print(f"{time()-start_time} seconds to make 1 request {url.attrs['href']}")
+
     if not review_raw_text:
         return "Error! Review text not found"
     return review_raw_text.text.strip()  # add review text to the reviews list
@@ -62,8 +62,7 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-    # to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,2)]
-    to_be_computed = [scrape_reviews_helper(isbn,"1") for _ in range(1,3)]
+    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,5)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
