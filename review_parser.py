@@ -11,7 +11,7 @@ def find_full_review_text(url):
     only_review_tags = SoupStrainer(itemprop="reviewBody")  # use special bs4 object to load the webpage partially
     full_review_webpage = requests_session.get(url.attrs["href"])
     print(f"{time()-start_time} seconds to make 1 request{url.attrs['href']}")
-    start_time = time()
+
     soup = BeautifulSoup(full_review_webpage.content, "html.parser", parse_only=only_review_tags)
     review_raw_text = soup.find('div', class_="reviewText")  # find full text of the review
     if not review_raw_text:
@@ -29,6 +29,7 @@ def scrape_reviews_helper(isbn, page):
     book_page_url = f"https://www.goodreads.com/api/reviews_widget_iframe?did=0&format=html&" \
                     f"hide_last_page=true&isbn={isbn}&links=660&min_rating=&page={page}&review_back=fff&stars=000&text=000"
     print(book_page_url)
+    start_review_page_scrape = time()
     webpage = requests_session.get(book_page_url)
     if webpage.status_code == 404:
         return
@@ -44,9 +45,11 @@ def scrape_reviews_helper(isbn, page):
     for full_review_link in full_review_links:
         full_review_texts.append(find_full_review_text(full_review_link))
     computed_reviews = zip(names, ratings, dask.compute(*full_review_texts))
-
+    print(f"Finished page({page}) scraping in {time() - start_review_page_scrape}")
+    start_adding_time = time()
     for review_tuple in computed_reviews:
         reviews.add_review(Review(review_tuple))
+    print(f"Added reviews(page {page}) to the ReviewList in {time() - start_adding_time}")
 
 def scrape_reviews(isbn):
     """
@@ -57,7 +60,7 @@ def scrape_reviews(isbn):
     After scraping the global(globality is necessary due to the intricacies of dask) variable reviews is cleared.
     """
 
-    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,4)]
+    to_be_computed = [scrape_reviews_helper(isbn,page) for page in range(1,10)]
     print("reviews are collected")
     dask.compute(*to_be_computed)
     # print(len(reviews.reviews))
