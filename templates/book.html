@@ -33,14 +33,14 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="youtube_video_container">
-                      <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/{{youtube_video_id}}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                      ></iframe>
+                        <iframe
+                                width="560"
+                                height="315"
+                                src="https://www.youtube.com/embed/{{youtube_video_id}}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        ></iframe>
                     </div>
                 </div>
 
@@ -49,48 +49,43 @@
         </div>
     </div>
 
-    {% if reviews|length >= 1 %}
     <br>
-    <div class="blurred_more_container">
+    <div class="blurred_more_container" id="read_more_container">
         <button onclick="myFunction()" id="myBtn">Read more</button>
     </div>
-    <div class="row" style="color:white">
-        <div class="col">
+
+    <div class="row" style="color:white" id="review_container">
+        <div class="col-sm-12 col-md-4" id="positive_container">
             <h1 class="review_title">Positive</h1>
-            <p class="review_author">by {{reviews[0].author}}</p>
-            <p class="review">
-                {{reviews[0].text}}
+            <p class="review_author" id="pos_auth"></p>
+            <p class="review" id="pos_rev">
+
             </p>
         </div>
-        {% if reviews|length >= 2 %}
-        <div class="col">
+        <div class="col-md-4 col-sm-12" id="neutral_container">
             <h1 class="review_title">Neutral</h1>
-            <p class="review_author">by {{reviews[1].author}}</p>
-            <p class="review">
-                {{reviews[1].text}}
+            <p class="review_author" id="neu_auth"></p>
+            <p class="review" id="neu_rev">
+
             </p></div>
-        {% endif %}
-        {% if reviews|length == 3 %}
-        <div class="col">
+        <div class="col-sm-12 col-md-4" id="negative_container">
             <h1 class="review_title">Negative</h1>
-            <p class="review_author">by {{reviews[2].author}}</p>
-            <p class="review">
-                {{reviews[2].text}}
+            <p class="review_author" id="neg_auth"></p>
+            <p class="review" id="neg_rev">
+
             </p>
         </div>
-        {% endif %}
 
     </div>
-            {% endif %}
 
 </div>
 
 </div>
+
 <script>
     function myFunction() {
         var btnText = document.getElementById("myBtn");
         var book_container = document.getElementById("book_container");
-
         if (btnText.innerHTML === "Read less") {
             btnText.innerHTML = "Read more";
             book_container.style.height = "80vh";
@@ -101,7 +96,40 @@
             book_container.style.height = "auto";
         }
     }
+    var bookId = {{book_id}}
 
+    $(document).ready(function () {
+        $("#read_more_container").hide();
+        $("#review_container").hide();
+        $("#positive_container").hide();
+        $("#neutral_container").hide();
+        $("#negative_container").hide();
+
+        $.getJSON("/get_reviews?book_id=" + bookId, function (result) {
+            console.log(result);
+            for (key in result["result"]) {
+                $("#read_more_container").show();
+                $("#review_container").show();
+
+                if (key == 0)
+                    console.log(key)
+                    document.getElementById("positive_container").style.display = "block";
+                    document.getElementById("pos_auth").textContent = "by " + result["result"][0]["author"];
+                    document.getElementById("pos_rev").textContent = result["result"][0]["text"];
+                if (key == 1)
+                    console.log(key)
+                    document.getElementById("neutral_container").style.display = "block";
+                    document.getElementById("neu_auth").textContent = "by " + result["result"][1]["author"];
+                    document.getElementById("neu_rev").textContent = result["result"][1]["text"];
+                if (key == 2)
+                    console.log(key)
+                    document.getElementById("negative_container").style.display = "block";
+                    document.getElementById("neg_auth").textContent = "by " + result["result"][2]["author"];
+                    document.getElementById("neg_rev").textContent = result["result"][2]["text"];
+
+            };
+        });
+    });
 </script>
 {% endblock %}
 

@@ -1,7 +1,7 @@
 # BookGoogle
 
 ## Description: 
-**<a href="">BookGoogle</a>** is a website aimed at making it easier for its users to decide on what book to read.
+**<a href="https://book-google-app.herokuapp.com/">BookGoogle</a>** is a website aimed at making it easier for its users to decide on what book to read.
 
 It provides its user with the following functionality:
 1) Searching books by title.
@@ -64,7 +64,7 @@ The approximate description of the client-server communication is as follows:
 8) The server sends the response to the client's request. The response contains the information about the book, most useful reviews and the link to the video book review on YouTube.
 
 ### Project structure
-The following is a tree representing the project structure with all important files:
+The following is a tree representing the project structure with all the important files:
 ```
 └───root directory
     ├───app.py - main file of the web aplication linking all routes to python code
@@ -77,9 +77,14 @@ The following is a tree representing the project structure with all important fi
     │   ├───scrape_reviews() function - return reviews of the book given its ISBN
     │   ... - some other helper methods
     ├───goodreads_search.py - provides book search
-    │   ├───search_book() function - return info about books found by searching
-    │   ├───get_book_isbn() helper function - return ISBN of the book given its GoodReads id
+    │   ├───search_book() function - return info about books found
+    │   ├───get_book_isbn() helper function - return ISBN of the book given its GoodReads ID
     │   └───element_to_dict() helper function - converts xml.etree.ElementTree.Element to the dictionary of dictionaries
+    ├───youtube_search.py
+    │   ├───get_video_ids() function - return list of IDs of YouTube videos from search query.
+    │   ├───get_video_info() function - return information on the video given its ID.
+    ├───test_review_classes.py - module for testing class Review and class ReviewList.
+    │   └───class TestReviews
     ├───static
     │   └───styles - a folder with css styles
     │       ...
@@ -106,12 +111,36 @@ The class has the following methods:
 * reliability_sort() - sort the interal list of reviews
 * get_mood_range(self, mood_lst) - return the most reliable (with the most emotionally neutral vocabulary) reviews that have ratings from mood_lst.
 
+Class **TestReviews** in test_review_classes.py is a unittest testcase. It is designed to test class Review and class ReviewList from review_classes.py. The TestReviews class has the following methods:
+* setUp(self) - create isntances of Review for futher testing in each test example.
+* test_correct_review(self) - test the correctness of attributes of reviews.
+* test_reviews_compare(self) - test the order of the instances of Review (>, <= etc.).
+* test_add_review_list(self) - test adding reviews to the instance of ReviewList.
+* test_review_list_sorting1(self) - test extracting the most neutral reviews from ReviewList.
+* test_review_list_sorting2(self) - test extracting the most neutral reviews from ReviewList.
+* test_review_list_sorting3(self) - test extracting the most neutral reviews from ReviewList.
+
 ## 💻 Usage: 
+### Our website
+1) Visit <a href="https://book-google-app.herokuapp.com/">book-google-app.herokuapp.com/</a>
 
-1) Visit <a href="">www.bookgoogle.com</a>
+<img src="https://raw.githubusercontent.com/UstymHanyk/BookGoogle/main/images/website1.png" />
 
-**or**
+2) Enter the title of the book and press Enter.
 
+<img src="https://raw.githubusercontent.com/UstymHanyk/BookGoogle/main/images/website2.png" />
+
+3) Wait till the server gives a response with some information about the book.
+
+<img src="https://raw.githubusercontent.com/UstymHanyk/BookGoogle/main/images/website3.png" />
+
+4) After some time the website will also display the reviews of the book.
+
+<img src="https://raw.githubusercontent.com/UstymHanyk/BookGoogle/main/images/website4.png" />
+
+
+### Running website locally
+Alternatively, you can run the website on the local computer (Python 3.9 is supported):
 1) Clone this repository with
 ```shell
 $ git clone https://github.com/UstymHanyk/BookGoogle.git

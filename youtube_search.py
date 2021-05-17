@@ -100,5 +100,5 @@ def get_video_info(video_id: str) -> dict:
 if __name__ == '__main__':
     video_ids = get_video_ids("the catcher in the rye", 2)
 
-    for video_id in video_ids:
-        pprint(get_video_info(video_id))
+    # for video_id in video_ids:
+    #     pprint(get_video_info(video_id))
